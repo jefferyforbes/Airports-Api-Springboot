@@ -1,0 +1,133 @@
+---
+openapi: 3.0.0
+info:
+  title: Swagger Airports API
+  description: A test project to generate API docs
+  contact:
+    name: Multiverse
+    url: https://www.multiverse.io
+  license:
+    name: MIT
+    url: https://choosealicense.com/licenses/mit/
+  version: v1
+servers:
+- url: https://virtserver.swaggerhub.com/jeffery.forbes/MvAirport/v1
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:3000
+tags:
+- name: Airports
+  description: Airport management
+paths:
+  /airports:
+    get:
+      tags:
+      - Airports
+      summary: returns an array of airports
+      responses:
+        "200":
+          description: returns an array of airports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+  /createAirport:
+    post:
+      tags:
+      - Airports
+      summary: creates a new airport into the collection.
+      responses:
+        "200":
+          description: Successs - Created a new airport
+  /airport/{icao}:
+    get:
+      tags:
+      - Airports
+      summary: returns an specific airport based on the icao.
+      parameters:
+      - name: icao
+        in: path
+        description: String icao that is unique to the airport
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: the airport matching the `icao`
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+  /updateAirport/{icao}:
+    put:
+      tags:
+      - Airports
+      summary: updates a existing airport into the collection
+      parameters:
+      - name: icao
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success - Updated `icao` in the collection
+  /deleteAirport/{icao}:
+    delete:
+      tags:
+      - Airports
+      summary: deletes a existing airport from the collection
+      parameters:
+      - name: icao
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successs - Airport deleted
+components:
+  schemas:
+    Airport:
+      type: object
+      properties:
+        icao:
+          type: string
+        iata:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        elevation:
+          type: integer
+        lat:
+          type: number
+        lon:
+          type: number
+        tz:
+          type: string
+      example:
+        icao: 00AK
+        iata: ""
+        name: Lowell Field
+        city: Anchor Point
+        state: Alaska
+        country: US
+        elevation: 450
+        lat: 59.94919968
+        lon: -151.695999146
+        tz: America/Anchorage
