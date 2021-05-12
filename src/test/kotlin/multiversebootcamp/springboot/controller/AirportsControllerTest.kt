@@ -55,6 +55,19 @@ internal class AirportsControllerTest @Autowired constructor(
                     status { isCreated() }
                 }
         }
+
+        @Test
+        fun alreadyExistsAirport() {
+            mockMvc.post("$baseURL/$icao")
+                .andDo { print() }
+                .andExpect {
+                    content {
+                        string("Error! This airport already exists in the database $icao")
+                        contentType(MediaType.APPLICATION_JSON)
+                    }
+                    status { isBadRequest() }
+                }
+        }
     }
 
     @Nested
