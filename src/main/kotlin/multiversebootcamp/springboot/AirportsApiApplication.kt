@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class HelloWorldApplication {
+class AirportsApiApplication {
     @Bean
     fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?): OpenAPI {
         return OpenAPI()
@@ -19,13 +19,13 @@ class HelloWorldApplication {
                 .description("28,000 airports")
             )
             .addServersItem(Server().url("http://localhost:8080/"))
-            .addServersItem(Server().url("https://api.whitehatcoaches.org.uk/"));
+//            .addServersItem(Server().url("https://api.whitehatcoaches.org.uk/"));
     }
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            SpringApplication.run(HelloWorldApplication::class.java, *args)
+            SpringApplication.run(AirportsApiApplication::class.java, *args)
         }
     }
 }
