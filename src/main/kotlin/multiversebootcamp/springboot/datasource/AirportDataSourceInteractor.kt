@@ -5,8 +5,8 @@ import multiversebootcamp.springboot.model.Airport
 interface AirportDataSourceInteractor {
     fun retrieveAirports(): Collection<Airport>
     fun createAirport(airport: Airport): Airport
-    fun removeAll(): Airport
+    fun removeAll()
     fun retrieveAirport(icao: String): Airport
     fun updateAirport(icao: String): Airport
-    fun removeAirport(icao: String): Airport
+    fun removeAirport(icao: String)
 }

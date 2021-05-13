@@ -11,7 +11,7 @@ class AirportDataSourceInteractorImpl : AirportDataSourceInteractor {
         TODO("Not yet implemented")
     }
 
-    override fun removeAll(): Airport {
+    override fun removeAll() {
         TODO("Not yet implemented")
     }
 
@@ -23,7 +23,7 @@ class AirportDataSourceInteractorImpl : AirportDataSourceInteractor {
         TODO("Not yet implemented")
     }
 
-    override fun removeAirport(icao: String): Airport {
+    override fun removeAirport(icao: String) {
         TODO("Not yet implemented")
     }
 }

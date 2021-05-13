@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.*
 
 @SpringBootTest
@@ -75,6 +76,7 @@ internal class AirportsControllerTest @Autowired constructor(
     @TestInstance(Lifecycle.PER_CLASS)
     inner class DeleteAirports {
         @Test
+        @DirtiesContext
         fun deleteAll() {
             mockMvc.delete(baseURL)
                 .andDo { print() }
@@ -111,6 +113,7 @@ internal class AirportsControllerTest @Autowired constructor(
     @TestInstance(Lifecycle.PER_CLASS)
     inner class UpdateAirport {
         @Test
+        @DirtiesContext
         fun updateAirport() {
             mockMvc.put("$baseURL/$icao")
                 .andDo { print() }
@@ -129,6 +132,7 @@ internal class AirportsControllerTest @Autowired constructor(
     @TestInstance(Lifecycle.PER_CLASS)
     inner class DeleteAirport {
         @Test
+        @DirtiesContext
         fun deleteAirport() {
             mockMvc.delete("$baseURL/$icao")
                 .andDo { print() }
@@ -137,7 +141,7 @@ internal class AirportsControllerTest @Autowired constructor(
                         string("Airport $icao delete!")
                         contentType(MediaType.APPLICATION_JSON)
                     }
-                    status { isOk() }
+                    status { isNoContent() }
                 }
         }
     }

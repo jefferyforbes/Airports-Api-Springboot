@@ -19,7 +19,6 @@ class AirportsApiApplication {
                 .description("28,000 airports")
             )
             .addServersItem(Server().url("http://localhost:8080/"))
-//            .addServersItem(Server().url("https://api.whitehatcoaches.org.uk/"));
     }
 
     companion object {

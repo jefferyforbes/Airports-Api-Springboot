@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Repository
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -39,7 +40,7 @@ class AirportsController {
     fun updateAirport(@PathVariable icao: String) = "Airport $icao updated and returned."
 
     @DeleteMapping("/{icao}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteAirport(@PathVariable icao: String) = "Airport $icao delete!"
 
     fun main(args: Array<String>) {
