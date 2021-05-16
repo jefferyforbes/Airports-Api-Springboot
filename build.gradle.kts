@@ -15,9 +15,14 @@ repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
+    google()
+    jcenter()
 }
 
 dependencies {
+//    Enabling the spring security library forces the api requester to provide authentication if they wish to make a
+//    call otherwise it will return a 401 (Unauthorized) response
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -26,10 +31,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.5.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.springframework.security:spring-security-test")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.security:spring-security-test")
+    implementation("com.byteowls:jasypt-gradle-plugin:1.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<KotlinCompile> {

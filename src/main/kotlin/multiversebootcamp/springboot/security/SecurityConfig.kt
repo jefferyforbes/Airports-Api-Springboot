@@ -1,26 +1,24 @@
 package multiversebootcamp.springboot.security
 
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import kotlin.Throws
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.web.server.ServerHttpSecurity
-import org.springframework.security.config.web.server.ServerHttpSecurity.http
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
-import org.w3c.dom.Text
-import java.lang.Exception
+//import org.springframework.context.annotation.Bean
+//import org.springframework.context.annotation.Configuration
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+//import kotlin.Throws
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity
+//import org.springframework.security.config.web.server.ServerHttpSecurity
+//import org.springframework.security.config.web.server.ServerHttpSecurity.http
+//import org.springframework.security.core.userdetails.User
+//import org.springframework.security.core.userdetails.UserDetailsService
+//import org.springframework.security.core.userdetails.UserDetails
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager
+//import org.w3c.dom.Text
+//import java.lang.Exception
 
-@Configuration
-@EnableWebSecurity
-class SecurityConfig : BCryptPasswordEncoder() {
+//@Configuration
+//@EnableWebSecurity
+//class SecurityConfig : BCryptPasswordEncoder() {
 //    init {
 //
 //        fun hashedPassword = SecurityConfig.run { encode("passsword") }
@@ -32,7 +30,8 @@ class SecurityConfig : BCryptPasswordEncoder() {
 //        }
 //    }
 
-}
+//}
+
 //internal class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 //    @Throws(Exception::class)
 //    override fun configure(http: HttpSecurity) {
