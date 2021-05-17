@@ -23,7 +23,6 @@ repositories {
 dependencies {
 //    Enabling the spring security library forces the api requester to provide authentication if they wish to make a
 //    call otherwise it will return a 401 (Unauthorized) response
-//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -33,13 +32,11 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.byteowls:jasypt-gradle-plugin:1.0.1")
-//    implementation("org.springframework.boot:spring-boot-starter-data-jpa") // Delete?
-//    implementation("org.springframework.boot:spring-boot-starter-data-jdbc") // Delete?
     implementation("org.litote.kmongo:kmongo:4.2.7")
     implementation("org.litote.kmongo:kmongo-async:4.2.7")
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.7")
-//    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }

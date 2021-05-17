@@ -1,4 +1,4 @@
-package multiversebootcamp.springboot.security
+package multiversebootcamp.springboot.security.mocksecurity
 
 import org.jasypt.util.text.AES256TextEncryptor
 import org.jasypt.util.text.TextEncryptor

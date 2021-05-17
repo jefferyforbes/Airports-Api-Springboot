@@ -1,12 +1,8 @@
 package multiversebootcamp.springboot.controller
 
-import multiversebootcamp.springboot.model.Airport
 import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Repository
 import org.springframework.web.bind.annotation.*
 
 @RestController
