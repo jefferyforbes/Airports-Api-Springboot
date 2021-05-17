@@ -21,8 +21,6 @@ repositories {
 }
 
 dependencies {
-//    Enabling the spring security library forces the api requester to provide authentication if they wish to make a
-//    call otherwise it will return a 401 (Unauthorized) response
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -37,6 +35,7 @@ dependencies {
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.auth0:java-jwt:3.16.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }

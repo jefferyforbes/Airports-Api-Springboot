@@ -10,7 +10,5 @@ data class ApiError(
     val message: String
     // This getter checks the api exception if there is an error message and returns it, else -> it returns a generic
     // message; "Error occurred"
-    get() = if(exceptionMessage != null) {
-         exceptionMessage
-    } else { "Error occurred"}
+    get() = exceptionMessage ?: "Error occurred"
 }

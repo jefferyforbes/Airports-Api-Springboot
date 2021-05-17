@@ -1,7 +1,6 @@
 package multiversebootcamp.springboot.datasource
 
-import multiversebootcamp.springboot.model.Airport
-import org.springframework.boot.SpringBootConfiguration
+import multiversebootcamp.springboot.models.Airport
 import org.springframework.stereotype.Repository
 
 @Repository

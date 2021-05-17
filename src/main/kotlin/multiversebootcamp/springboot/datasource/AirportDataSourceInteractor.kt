@@ -1,6 +1,6 @@
 package multiversebootcamp.springboot.datasource
 
-import multiversebootcamp.springboot.model.Airport
+import multiversebootcamp.springboot.models.Airport
 
 interface AirportDataSourceInteractor {
     fun retrieveAirports(): Collection<Airport>

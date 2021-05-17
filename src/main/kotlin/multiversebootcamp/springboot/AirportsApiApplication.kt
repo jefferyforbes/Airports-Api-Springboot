@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.support.beans
 import org.springframework.security.core.userdetails.User
 
-@SpringBootApplication
+@SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
 class AirportsApiApplication() {
     @Bean
     fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?): OpenAPI {
@@ -26,6 +26,8 @@ class AirportsApiApplication() {
             .addServersItem(Server()
                 .url("http://localhost:8080/"))
     }
+
+    // TODO: DTOs could be added to specify the API Request bodies
 
     companion object {
         @JvmStatic

@@ -1,7 +1,7 @@
 package multiversebootcamp.springboot.service
 
 import multiversebootcamp.springboot.datasource.AirportDataSourceInteractor
-import multiversebootcamp.springboot.model.Airport
+import multiversebootcamp.springboot.models.Airport
 import org.springframework.stereotype.Service
 
 @Service
