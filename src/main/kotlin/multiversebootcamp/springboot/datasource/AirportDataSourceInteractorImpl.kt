@@ -1,8 +1,12 @@
 package multiversebootcamp.springboot.datasource
 
 import multiversebootcamp.springboot.model.Airport
+import org.springframework.boot.SpringBootConfiguration
+import org.springframework.stereotype.Repository
 
-class AirportDataSourceInteractorImpl : AirportDataSourceInteractor {
+@Repository
+//This repository annotation tells spring boot that class is responsible to storing and updating the database.
+class AirportDataSourceInteractorImpl: AirportDataSourceInteractor {
     override fun retrieveAirports(): Collection<Airport> {
         TODO("Not yet implemented")
     }

@@ -3,7 +3,7 @@ package multiversebootcamp.springboot
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
-import multiversebootcamp.springboot.security.mockEncryption
+import multiversebootcamp.springboot.security.MockEncryption
 import org.jasypt.util.text.AES256TextEncryptor
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
@@ -28,7 +28,7 @@ class AirportsApiApplication {
         @JvmStatic
         fun main(args: Array<String>) {
             SpringApplication.run(AirportsApiApplication::class.java, *args)
-            mockEncryption()
+            MockEncryption()
                 .encrypting(encryptor = AES256TextEncryptor())
         }
     }

@@ -1,14 +1,20 @@
 package multiversebootcamp.springboot.model
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+import java.time.LocalDate
+
+@Serializable
 data class Airport(
-    val icao: String,
-    val iata: String,
     val name: String,
-    val city: String,
-    val state: String,
-    val country: String,
-    val elevation: Int,
-    val lat: Number,
-    val lon: Number,
-    val tz: String,
+    val icao: String,
+    val iata: String? = null,
+    val city: String? = null,
+    val state: String? = null,
+    val country: String? = null,
+    val elevation: Int? = null,
+    @Contextual val lat: Number? = null,
+    @Contextual val lon: Number? = null,
+    val tz: String? = null,
+    @Contextual val date: LocalDate = LocalDate.now()
 )

@@ -8,6 +8,6 @@ package multiversebootcamp.springboot.security
 //    fun main(args: Array<String>) {
 //        val passwordEncoder = BCryptPasswordEncoder()
 //        val hashedPassword: String = passwordEncoder.encode("hash123")
-//        println(hashedPassword)
+//        println("This password was hashed by BCrypt: $hashedPassword")
 //    }
 //}

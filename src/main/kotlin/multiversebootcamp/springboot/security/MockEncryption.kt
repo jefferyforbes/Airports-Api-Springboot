@@ -3,7 +3,7 @@ package multiversebootcamp.springboot.security
 import org.jasypt.util.text.AES256TextEncryptor
 import org.jasypt.util.text.TextEncryptor
 
-class mockEncryption {
+class MockEncryption {
     fun encrypting(encryptor: AES256TextEncryptor) {
         val message = "This message is a secret"
         encryptor.setPassword("supersafepassword")

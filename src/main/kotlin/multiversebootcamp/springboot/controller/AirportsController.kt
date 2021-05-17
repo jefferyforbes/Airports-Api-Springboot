@@ -15,10 +15,6 @@ class AirportsController {
     // TODO: Use the AirportService class to impl the functionality for the HTTP Requests
     // TODO: Delete "(produces = [MediaType.APPLICATION_JSON_VALUE])" once service class is implemented
 
-    @ExceptionHandler(NoSuchElementException::class)
-    fun handleNotFound(e: NoSuchElementException): ResponseEntity<String> =
-        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
-
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(HttpStatus.OK)
     fun getAirports(): String = "All Airports returned."
