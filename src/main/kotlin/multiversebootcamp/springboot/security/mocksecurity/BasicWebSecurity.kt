@@ -9,24 +9,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
-@EnableWebSecurity(debug = true)
-class BasicWebSecurity : WebSecurityConfigurerAdapter() {
-
-    @Override
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth
-            .inMemoryAuthentication()
-            .withUser("mainUser")
-            .password("mainPassword")
-            .roles("admin")
-
-        User.builder()
-            .username("mainUser")
-            .password("mainPassword")
-    }
-
-    @Bean
-    fun getPasswordEncoder(): PasswordEncoder? {
-        return NoOpPasswordEncoder.getInstance()
-    }
-}
+//@EnableWebSecurity(debug = true)
+//class BasicWebSecurity : WebSecurityConfigurerAdapter() {
+//
+//    @Override
+//    override fun configure(auth: AuthenticationManagerBuilder) {
+//        auth
+//            .inMemoryAuthentication()
+//            .withUser("mainUser")
+//            .password("mainPassword")
+//            .roles("admin")
+//
+//        User.builder()
+//            .username("mainUser")
+//            .password("mainPassword")
+//    }
+//
+//    @Bean
+//    fun getPasswordEncoder(): PasswordEncoder? {
+//        return NoOpPasswordEncoder.getInstance()
+//    }
+//}

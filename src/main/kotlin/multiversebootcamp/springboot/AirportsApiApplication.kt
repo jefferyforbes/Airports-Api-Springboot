@@ -3,20 +3,19 @@ package multiversebootcamp.springboot
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
-import multiversebootcamp.springboot.security.mocksecurity.MockEncryption
-import org.jasypt.util.text.AES256TextEncryptor
+import multiversebootcamp.springboot.datasource.dao.DAO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.context.support.beans
-import org.springframework.security.core.userdetails.User
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-@SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
+@SpringBootApplication // (exclude = [SecurityAutoConfiguration::class])
 class AirportsApiApplication() {
     @Bean
-    fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?): OpenAPI {
+    fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?, dao: DAO): OpenAPI {
+        println(dao.retrieveUser("vibeN_Jeff"))
+        println(dao.retrieveUsers()) // add dao: Dao in parameter at line 16 to use
         return OpenAPI()
             .info(Info()
                 .title("Airports")
@@ -27,7 +26,11 @@ class AirportsApiApplication() {
                 .url("http://localhost:8080/"))
     }
 
-    // TODO: DTOs could be added to specify the API Request bodies
+
+    @Bean
+    fun bCryptPasswordEncoder(): BCryptPasswordEncoder? {
+        return BCryptPasswordEncoder()
+    }
 
     companion object {
         @JvmStatic

@@ -3,6 +3,6 @@ package multiversebootcamp.springboot.utils.passwordutil
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 interface PasswordUtilInteractor {
-    fun encrypt(passwordEncoder: BCryptPasswordEncoder, toEncode: String): String
-    fun passwordCompare(passwordEncoder: BCryptPasswordEncoder, password: String): Boolean
+    fun encrypt(passwordEncoder: BCryptPasswordEncoder, encode: String?): String
+    fun passwordCompare(passwordEncoder: BCryptPasswordEncoder, inputPassword: String, existPassword: String): Boolean
 }

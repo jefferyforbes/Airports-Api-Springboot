@@ -1,15 +1,14 @@
 package multiversebootcamp.springboot.service
 
-import multiversebootcamp.springboot.datasource.UserDataSourceInteractor
-import multiversebootcamp.springboot.models.Airport
+import multiversebootcamp.springboot.datasource.dao.DAO
 import multiversebootcamp.springboot.models.User
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(private val dataSourceInteractor: UserDataSourceInteractor) {
-//    private fun getUsers(): Collection<Airport> = dataSourceInteractor.retrieveAirports()
-//    private fun addUser(user: User): Airport = dataSourceInteractor.createAirport(airport)
-//    private fun getUser(icao: String) = dataSourceInteractor.retrieveAirport(icao)
-//    private fun updateAirport(icao: String) = dataSourceInteractor.updateAirport(icao)
-//    private fun deleteUser(userid: _id) = dataSourceInteractor.removeAirport(icao)
+class UserService(private val data: DAO) {
+    private fun getUsers(): Collection<User> = data.retrieveUsers()
+    private fun addUser(user: User): User = data.createUser(user)
+    private fun getUser(username: String) = data.retrieveUser(username)
+    private fun updateUser(username: String) = data.updateUser(username)
+    private fun deleteUser(username: String) = data.removeUser(username)
 }

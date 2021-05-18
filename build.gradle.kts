@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.5.0-SNAPSHOT"
+    id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.0-RC"
-    kotlin("plugin.spring") version "1.5.0-RC"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.spring") version "1.4.32"
     kotlin("plugin.serialization") version "1.5.0"
 }
 
@@ -34,8 +34,12 @@ dependencies {
     implementation("org.litote.kmongo:kmongo-async:4.2.7")
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security:2.4.0")
+    implementation("org.springframework.security:spring-security-core:5.4.2")
+    implementation("org.springframework.security:spring-security-oauth2-jose:5.4.2")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server:5.4.2")
     implementation("com.auth0:java-jwt:3.16.0")
+//    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }

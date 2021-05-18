@@ -1,90 +1,72 @@
 package multiversebootcamp.springboot.security
 
-
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import io.swagger.v3.oas.annotations.security.SecurityRequirements
-//import multiversebootcamp.springboot.security.SecurityConfig.ROLES.ADMIN_ROLE
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties
-import org.springframework.boot.autoconfigure.security.SecurityProperties
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Primary
-import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import kotlin.Throws
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.config.web.server.ServerHttpSecurity
-import org.springframework.security.config.web.server.ServerHttpSecurity.http
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
-import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.w3c.dom.Text
-import java.lang.Exception
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator
+import org.springframework.security.oauth2.core.OAuth2TokenValidator
+import org.springframework.security.oauth2.jwt.*
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.util.*
 
-//@EnableWebSecurity
-//class SecurityConfig: WebSecurityConfigurerAdapter() {
-//    init{
-//        val users = User.withUsername("mainUser")
-//        val user = users
-//            .username("mainUser")
-//            .password("mainPassword")
-//            .roles("USER", ADMIN_ROLE)
-//            .build()
-//    }
-//
-//    fun userAuthenticate(
-//        authenticate: AuthenticationManagerBuilder,
-//        passwordEncoder: BCryptPasswordEncoder
-//    ): AuthenticationManagerBuilder {
-//        authenticate
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig : WebSecurityConfigurerAdapter() {
+
+    @Value("\${auth0.audience}")
+    private val audience: String? = "https://airports"
+
+    @Value("\${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    private val issuer: String? = null
+
+    @Throws(Exception::class)
+    override fun configure(httpSecurity: HttpSecurity) {
+        httpSecurity.authorizeRequests()
+            .anyRequest()
+            .authenticated() // ** IMPORTANT! do not use the line below in production apps!! **
+            .and().csrf().disable()
+            .cors()
+            .and().oauth2ResourceServer().jwt()
+    }
+
+//    @Autowired
+//    fun configureGlobal(auth: AuthenticationManagerBuilder) {
+//        auth
 //            .inMemoryAuthentication()
-//            .withUser("mainUser")
-//            .password(passwordEncoder.encode("mainPassword"))
-//            .authorities(ADMIN_ROLE)
-//            .roles(ADMIN_ROLE)
-//        return authenticate
+//            .withUser("user").password("password").roles("USER").and()
+//            .withUser("user").password("password").roles("USER", "ADMIN")
 //    }
-//
-//    val passwordEncoder = BCryptPasswordEncoder()
-//
-//    val currentUser: UserDetails? = User.withUsername("mainUser")
-//    .password(passwordEncoder.encode("mainPassword"))
-//    .authorities(ADMIN_ROLE)
-//    .roles(ADMIN_ROLE)
-//    .build()
-//
-//    override fun configure(http: HttpSecurity) {
-//        http
-//            .csrf()
-//            .disable()
-//            .authorizeHttpRequests {
-//                http
-//                    .authorizeRequests()
-//                    .anyRequest().fullyAuthenticated()
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/login")
-//                    .failureUrl("/login?error")
-//                    .permitAll(true)
-//                    .and()
-//                    .logout()
-//                    .permitAll()
-//                    .and()
-//                    .httpBasic()
-//            }
-//    }
-//
-//    object ROLES {
-//        const val ADMIN_ROLE = "Admin"
-//        const val USER_ROLE = "User"
-//    }
-//}
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+
+        // ** IMPORTANT! do not use the line below in production apps!! **
+        // ** Specify specific origins instead
+        configuration.allowedOriginPatterns = listOf("*")
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
+        configuration.allowCredentials = true
+        configuration.allowedHeaders = listOf("Authorization", "Cache-Control", "Content-Type")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+
+    @Bean
+    fun jwtDecoder(): JwtDecoder? {
+        val jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer) as NimbusJwtDecoder
+        var audienceValidator: OAuth2TokenValidator<Jwt> = AudienceValidator(audience)
+        val withIssuer: OAuth2TokenValidator<Jwt> = JwtValidators.createDefaultWithIssuer(issuer)
+        val withAudience: OAuth2TokenValidator<Jwt> = DelegatingOAuth2TokenValidator<Jwt>(withIssuer, audienceValidator)
+        jwtDecoder.setJwtValidator(withAudience)
+        return jwtDecoder
+    }
+}
