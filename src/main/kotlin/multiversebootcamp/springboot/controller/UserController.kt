@@ -2,6 +2,7 @@ package multiversebootcamp.springboot.controller
 
 import multiversebootcamp.springboot.datasource.dao.DAO
 import multiversebootcamp.springboot.models.User
+import multiversebootcamp.springboot.service.AirportService
 import multiversebootcamp.springboot.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -9,10 +10,10 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/user")
-class UserController(private val userService: UserService) {
+class UserController(private val service: AirportService) {
 
     @GetMapping
-    fun allUserNames() = userService
+    fun allUserNames() = service.
 
     @GetMapping("/register")
     fun register(): String {
