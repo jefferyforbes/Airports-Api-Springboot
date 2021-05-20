@@ -3,19 +3,25 @@ package multiversebootcamp.springboot
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
+import kotlinx.coroutines.runBlocking
+import multiversebootcamp.springboot.controller.UserController
 import multiversebootcamp.springboot.datasource.dao.DAO
+import multiversebootcamp.springboot.models.User
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-@SpringBootApplication // (exclude = [SecurityAutoConfiguration::class])
-class AirportsApiApplication() {
+@SpringBootApplication (exclude = [SecurityAutoConfiguration::class])
+class AirportsApiApplication(
+    private val userController: UserController
+) {
     @Bean
     fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?, dao: DAO): OpenAPI {
-        println(dao.retrieveUser("vibeN_Jeff"))
-        println(dao.retrieveUsers()) // add dao: Dao in parameter at line 16 to use
+//        println(dao.retrieveUser("vibeN_Jeff"))
+        println(dao.retrieveUsers())
         return OpenAPI()
             .info(Info()
                 .title("Airports")

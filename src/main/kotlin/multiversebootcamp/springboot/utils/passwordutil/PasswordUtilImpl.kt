@@ -4,15 +4,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class PasswordUtilInteractorImpl : PasswordUtilInteractor {
+class PasswordUtilImpl : PasswordUtil {
 
-    override fun encrypt(passwordEncoder: BCryptPasswordEncoder, encode: String?): String =
+    override fun encrypt(passwordEncoder: BCryptPasswordEncoder, encode: String): String =
         passwordEncoder.encode(encode)
 
     override fun passwordCompare(
         passwordEncoder: BCryptPasswordEncoder,
         inputPassword: String,
-        existPassword: String,
+        existPassword: String?,
     ): Boolean {
         return passwordEncoder.matches(inputPassword, existPassword)
     }

@@ -31,7 +31,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity.authorizeRequests()
             .anyRequest()
-            .authenticated() // ** IMPORTANT! do not use the line below in production apps!! **
+            .authenticated()
             .and().csrf().disable()
             .cors()
             .and().oauth2ResourceServer().jwt()

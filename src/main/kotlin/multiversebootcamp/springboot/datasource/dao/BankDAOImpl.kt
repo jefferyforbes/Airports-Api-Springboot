@@ -1,0 +1,60 @@
+package multiversebootcamp.springboot.datasource.dao
+
+import multiversebootcamp.springboot.models.Bank
+import multiversebootcamp.springboot.utils.passwordutil.PasswordUtil
+import org.litote.kmongo.*
+import org.springframework.http.ResponseEntity
+
+class BankDAOImpl(private val passVerifier: PasswordUtil) : BankDAO {
+
+    private val baseURL = System.getenv("AirportsDB")
+    private val mainAccPass = System.getenv("mainAdminPassword")
+    private val client = KMongo.createClient(baseURL)
+    private val database = client.getDatabase("Airports")
+    private val banksCol = database.getCollection<Bank>()
+
+    override fun createAccount(bank: Bank) {
+        banksCol.insertOne(bank)
+    }
+
+    override fun getAccount(bank: Bank) {
+        banksCol.findOne(Bank::accountNumber eq bank.accountNumber)
+    }
+
+    override fun getBalance(bank: Bank): ResponseEntity<Any> {
+        val bankQ = banksCol.findOne(Bank::accountNumber eq bank.accountNumber)
+        return if (bankQ != null) {
+            ResponseEntity.ok().body(bankQ.balance)
+        } else {
+            ResponseEntity.badRequest().body("Error! Bank not found")
+        }
+    }
+
+    override fun getStandingOrders(bank: Bank) {
+        val bankQ = banksCol.findOne(Bank::accountNumber eq bank.accountNumber)
+        val ordersQ = bankQ?.standingOrder?.toList()
+        if (ordersQ != null) {
+            ResponseEntity.ok(ordersQ)
+        } else {
+            ResponseEntity.badRequest().body(
+                "Error! Either the bank was not found, or there is no standing orders"
+            )
+        }
+    }
+
+    override fun createStandingOrder(bank: Bank, order: String) {
+        banksCol.updateOne(Bank::accountNumber eq bank.accountNumber,
+            Bank::standingOrder addToSet order)
+    }
+
+    override fun sendMoney(senderAccount: Bank, receiptent: Bank, amount: Int) {
+        val sender = banksCol.findOne(Bank::accountNumber eq senderAccount.accountNumber)
+        val receiver = banksCol.findOne(Bank::accountNumber eq receiptent.accountNumber)
+        if (senderAccount.balance < amount) {
+            "Sorry you do not have enough to cover this transfer."
+        } else {
+            sender?.balance!!.minus(amount)
+            receiver?.balance!!.plus(amount)
+        }
+    }
+}

@@ -3,7 +3,7 @@ package multiversebootcamp.springboot.datasource.db
 import kotlinx.coroutines.*
 import multiversebootcamp.springboot.models.Airport
 import multiversebootcamp.springboot.models.User
-import multiversebootcamp.springboot.utils.passwordutil.PasswordUtilInteractor
+import multiversebootcamp.springboot.utils.passwordutil.PasswordUtil
 import org.litote.kmongo.KMongo.createClient
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 
 @Configuration
-class DBConfig(eCryp: PasswordUtilInteractor, bcrypt: BCryptPasswordEncoder) {
+class DBConfig(eCryp: PasswordUtil, bcrypt: BCryptPasswordEncoder) {
 
     private val baseURL = System.getenv("AirportsDB")
     private val client = createClient(baseURL)
@@ -33,12 +33,15 @@ class DBConfig(eCryp: PasswordUtilInteractor, bcrypt: BCryptPasswordEncoder) {
     }
 
     private val userInitialEntry = runBlocking {
-        userCol.insertOne(
-            User(
-                name = "Jeffery Forbes",
-                username = "mainAccount",
-                password = eCryp.encrypt(bcrypt, System.getenv("mainAdminPassword")),
-                role = "admin")
-        )
+        val userQ = userCol.findOne(User::username eq "mainAccount")
+        if (userQ == null) {
+            userCol.insertOne(
+                User(
+                    name = "Jeffery Forbes",
+                    username = "mainAccount",
+                    password = eCryp.encrypt(bcrypt, System.getenv("mainAdminPassword")),
+                    role = "admin")
+            )
+        } else println("mainAccount User already exists!!!")
     }
 }

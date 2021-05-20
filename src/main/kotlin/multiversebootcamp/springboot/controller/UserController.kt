@@ -2,31 +2,29 @@ package multiversebootcamp.springboot.controller
 
 import multiversebootcamp.springboot.datasource.dao.DAO
 import multiversebootcamp.springboot.models.User
-import multiversebootcamp.springboot.service.AirportService
-import multiversebootcamp.springboot.service.UserService
+import multiversebootcamp.springboot.utils.passwordutil.PasswordUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("/user")
-class UserController(private val service: AirportService) {
+@RequestMapping("/users")
+class UserController(private val service: DAO,
+private val passV: PasswordUtil) {
 
     @GetMapping
-    fun allUserNames() = service.
+    fun allUserNames(): ResponseEntity<Any> = ResponseEntity.ok(service.retrieveUsers())
 
-    @GetMapping("/register")
-    fun register(): String {
-        return "Registered"
+    @PostMapping("/register")
+    fun register(@RequestBody body: User): String {
+        service.createUser(body)
+        return "User Created"
     }
 
-    @PostMapping("/login")
-    fun login(user:User): String {
-        return "On Success logged In"
-//        Date(System.currentTimeMillis() + 60 * 1 * 1000) 1 Hour
-    }
+    @GetMapping("/login")
+    fun login(@RequestBody body: User) = service.loginReq(body)
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     fun logout(response: HttpServletResponse): ResponseEntity<Any> {
         return ResponseEntity.ok("Logged Out")
     }

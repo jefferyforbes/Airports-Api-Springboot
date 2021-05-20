@@ -11,8 +11,6 @@ data class User(
     @Contextual val _id: ObjectId? = null,
     val name: String? = "User",
     val username: String,
-    @BsonIgnore val password: String,
-    val role: String
-) {
-
-}
+    val password: String,
+    val role: String? = null
+)

@@ -1,5 +1,6 @@
 package multiversebootcamp.springboot.controller
 
+import multiversebootcamp.springboot.datasource.dao.DAO
 import org.springframework.boot.SpringApplication
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/airports")
-class AirportsController {
+class AirportsController(private val service: DAO) {
     // TODO: Use the AirportService class to impl the functionality for the HTTP Requests
     // TODO: Delete "(produces = [MediaType.APPLICATION_JSON_VALUE])" once service class is implemented
 
