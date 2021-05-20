@@ -38,8 +38,10 @@ dependencies {
     implementation("org.springframework.security:spring-security-core:5.4.2")
     implementation("org.springframework.security:spring-security-oauth2-jose:5.4.2")
     implementation("org.springframework.security:spring-security-oauth2-resource-server:5.4.2")
-    implementation("com.auth0:java-jwt:3.16.0")
-//    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }
