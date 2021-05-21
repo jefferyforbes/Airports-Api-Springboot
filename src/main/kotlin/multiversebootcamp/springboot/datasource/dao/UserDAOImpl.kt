@@ -8,12 +8,14 @@ import org.litote.kmongo.KMongo
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
+import org.springframework.context.annotation.Primary
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
+@Primary
 class UserDAOImpl(private val passVerifier: PasswordUtil) : UserDAO {
     private val baseURL = System.getenv("AirportsDB")
     private val mainAccPass = System.getenv("mainAdminPassword")
@@ -51,14 +53,14 @@ class UserDAOImpl(private val passVerifier: PasswordUtil) : UserDAO {
 
     override fun loginReq(user: User): ResponseEntity<Any> {
         val userQ = userCol.findOne(User::username eq user.username)
-        val passQ = userQ?.password
+        val passQ = userQ!!.password
         val passV = passVerifier.passwordCompare(
             passwordEncoder = BCryptPasswordEncoder(),
             existPassword = passQ,
             inputPassword = user.password
         )
 
-        val issuer = userQ?._id.toString()
+        val issuer = userQ._id.toString()
         print(issuer)
 
         val jwt = Jwts.builder()

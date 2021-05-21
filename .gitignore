@@ -1,6 +1,8 @@
 HELP.md
 .gradle
 .env
+auth_config.json
+
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

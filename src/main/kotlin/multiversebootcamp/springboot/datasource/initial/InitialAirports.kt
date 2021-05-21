@@ -6,9 +6,11 @@ import org.litote.kmongo.KMongo
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
+import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+@Component
 class InitialAirports {
 
     private val baseURL = System.getenv("AirportsDB")
@@ -24,7 +26,7 @@ class InitialAirports {
 
     private val initialAirports = runBlocking {
         if (airportQ == null) {
-            Airport(
+            airportCol.insertOne(Airport(
                 name = "London Stanstead Airport",
                 icao = "EGSS",
                 iata = "STN",
@@ -37,7 +39,7 @@ class InitialAirports {
                 tz = null,
                 date = LocalDate.now(),
                 time = LocalDateTime.now()
-            )
+            ))
         } else {
             println("${airportQ.name} already exists!!!")
         }

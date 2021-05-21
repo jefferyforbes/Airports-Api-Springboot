@@ -9,7 +9,7 @@ import org.litote.kmongo.getCollection
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class DBConfig() {
+class DBConfig {
     private val baseURL = System.getenv("AirportsDB")
     private val client = createClient(baseURL)
     private val database = client.getDatabase("Airports")

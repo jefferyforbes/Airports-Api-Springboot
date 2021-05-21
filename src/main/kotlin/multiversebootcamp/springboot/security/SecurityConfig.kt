@@ -24,7 +24,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Value("\${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private val issuer: String? = null
 
-    @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity.authorizeRequests()
             .anyRequest()
@@ -33,14 +32,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .cors()
             .and().oauth2ResourceServer().jwt()
     }
-
-//    @Autowired
-//    fun configureGlobal(auth: AuthenticationManagerBuilder) {
-//        auth
-//            .inMemoryAuthentication()
-//            .withUser("user").password("password").roles("USER").and()
-//            .withUser("user").password("password").roles("USER", "ADMIN")
-//    }
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource? {
@@ -60,7 +51,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Bean
     fun jwtDecoder(): JwtDecoder? {
         val jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer) as NimbusJwtDecoder
-        var audienceValidator: OAuth2TokenValidator<Jwt> = AudienceValidator(audience)
+        val audienceValidator: OAuth2TokenValidator<Jwt> = AudienceValidator(audience)
         val withIssuer: OAuth2TokenValidator<Jwt> = JwtValidators.createDefaultWithIssuer(issuer)
         val withAudience: OAuth2TokenValidator<Jwt> = DelegatingOAuth2TokenValidator<Jwt>(withIssuer, audienceValidator)
         jwtDecoder.setJwtValidator(withAudience)

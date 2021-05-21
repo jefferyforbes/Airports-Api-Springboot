@@ -12,7 +12,7 @@ class PasswordUtilImpl : PasswordUtil {
     override fun passwordCompare(
         passwordEncoder: BCryptPasswordEncoder,
         inputPassword: String,
-        existPassword: String?,
+        existPassword: String,
     ): Boolean {
         return passwordEncoder.matches(inputPassword, existPassword)
     }

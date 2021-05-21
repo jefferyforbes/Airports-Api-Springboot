@@ -4,27 +4,35 @@ import multiversebootcamp.springboot.datasource.dao.BankDAO
 import multiversebootcamp.springboot.models.Bank
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import retrofit2.http.Path
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/banks")
 class BanksController(private val service: BankDAO) {
 
+    @GetMapping
+    fun getAllBanks() = service.getAllBanks()
+
     @GetMapping("/login")
-    fun login(@RequestBody bank: Bank) = "Account $bank logged into."
+    fun login(): String = "Account logged into."
+
+    @GetMapping("/{accountNumber}")
+    fun getBank(@PathVariable accountNumber : Int) = service.getAccount(accountNumber)
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     fun createBank(@RequestBody bank: Bank) = service.createAccount(bank)
 
-    @GetMapping("/balance/{bank}")
-    fun getBalance(@RequestBody @PathVariable bank: Bank) = service.getBalance(bank)
+    @GetMapping("/{accountNumber}/balance")
+    fun getBalance(@PathVariable accountNumber: Int) = service.getBalance(accountNumber)
 
-    @GetMapping("/standing-orders")
-    fun getStandingOrders(@RequestBody bank: Bank) = service.getStandingOrders(bank)
+    @GetMapping("/{accountNumber}/standing-orders")
+    fun getStandingOrders(@PathVariable accountNumber: Int) = service.getStandingOrders(accountNumber)
 
-    @PostMapping("/standing-orders")
+    @PostMapping("/{accountNumber}/standing-orders")
     @ResponseStatus(HttpStatus.CREATED)
-    fun standingOrder(@RequestBody bank: Bank, order: String) = service.createStandingOrder(bank, order)
+    fun standingOrder(@RequestBody @PathVariable accountNumber: Int, order: String) =
+        service.createStandingOrder(accountNumber, order)
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)

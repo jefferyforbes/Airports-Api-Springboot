@@ -29,14 +29,6 @@ internal class AirportsControllerTest @Autowired constructor(
         @Test
         fun getAirports() {
             mockMvc.get(baseURL)
-                .andDo { print() }
-                .andExpect {
-                    content {
-                        string("All Airports returned.")
-                        contentType(MediaType.APPLICATION_JSON)
-                    }
-                    status { isOk() }
-                }
         }
     }
 
