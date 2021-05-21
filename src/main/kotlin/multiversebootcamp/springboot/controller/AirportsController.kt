@@ -1,6 +1,7 @@
 package multiversebootcamp.springboot.controller
 
-import multiversebootcamp.springboot.datasource.dao.DAO
+import multiversebootcamp.springboot.datasource.dao.AirportDAO
+import multiversebootcamp.springboot.models.Airport
 import org.springframework.boot.SpringApplication
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -8,33 +9,29 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/airports")
-class AirportsController(private val service: DAO) {
-    // TODO: Use the AirportService class to impl the functionality for the HTTP Requests
-    // TODO: Delete "(produces = [MediaType.APPLICATION_JSON_VALUE])" once service class is implemented
+class AirportsController(private val service: AirportDAO) {
 
-    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAirports(): String = "All Airports returned."
+    fun getAirports() = service.retrieveAirports()
 
-    @PostMapping("/{icao}", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addAirport(@PathVariable icao: String) = "Nice! Created a New Airport $icao"
+    fun addAirport(@RequestBody airport: Airport) = service.createAirport(airport)
 
     @DeleteMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteAll() = "All Airports Deleted!"
+    fun deleteAll() = "All Airports Deleted!" // DECIDE NOT TO IMPL
 
-    @GetMapping("/{icao}", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{icao}")
     @ResponseStatus(HttpStatus.OK)
-    fun getAirport(@PathVariable icao: String) = "Airport $icao returned."
+    fun getAirport(@PathVariable @RequestBody airport: Airport) = service.retrieveAirport(airport)
 
-    @PutMapping("/{icao}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    @ResponseStatus(HttpStatus.OK)
-    fun updateAirport(@PathVariable icao: String) = "Airport $icao updated and returned."
+    @PutMapping
+    fun updateAirport(@RequestBody airport: Airport) = service.updateAirport(airport)
 
-    @DeleteMapping("/{icao}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteAirport(@PathVariable icao: String) = "Airport $icao delete!"
+    @DeleteMapping
+    fun deleteAirport(@RequestBody airport: Airport) = service.removeAirport(airport)
 
     fun main(args: Array<String>) {
         SpringApplication.run(AirportsController::class.java, *args)

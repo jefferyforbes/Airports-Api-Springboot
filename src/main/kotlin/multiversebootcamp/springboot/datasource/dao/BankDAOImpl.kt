@@ -4,7 +4,9 @@ import multiversebootcamp.springboot.models.Bank
 import multiversebootcamp.springboot.utils.passwordutil.PasswordUtil
 import org.litote.kmongo.*
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Repository
 
+@Repository
 class BankDAOImpl(private val passVerifier: PasswordUtil) : BankDAO {
 
     private val baseURL = System.getenv("AirportsDB")
@@ -14,7 +16,12 @@ class BankDAOImpl(private val passVerifier: PasswordUtil) : BankDAO {
     private val banksCol = database.getCollection<Bank>()
 
     override fun createAccount(bank: Bank) {
-        banksCol.insertOne(bank)
+        val bankQ = banksCol.findOne(Bank::accountNumber eq bank.accountNumber)
+        if (bankQ != null) {
+            banksCol.insertOne(bank)
+        } else {
+            ("Error, this account already exists in Database")
+        }
     }
 
     override fun getAccount(bank: Bank) {
@@ -51,7 +58,7 @@ class BankDAOImpl(private val passVerifier: PasswordUtil) : BankDAO {
         val sender = banksCol.findOne(Bank::accountNumber eq senderAccount.accountNumber)
         val receiver = banksCol.findOne(Bank::accountNumber eq receiptent.accountNumber)
         if (senderAccount.balance < amount) {
-            "Sorry you do not have enough to cover this transfer."
+            "Sorry, you do not have enough to cover this transfer."
         } else {
             sender?.balance!!.minus(amount)
             receiver?.balance!!.plus(amount)

@@ -10,5 +10,5 @@ data class Bank (
     val accountNumber: Int,
     val passcode: Int,
     val balance: Int = 0,
-    val standingOrder: List<String?>
+    val standingOrder: List<String?>?
 )

@@ -3,10 +3,8 @@ package multiversebootcamp.springboot
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
-import kotlinx.coroutines.runBlocking
 import multiversebootcamp.springboot.controller.UserController
-import multiversebootcamp.springboot.datasource.dao.DAO
-import multiversebootcamp.springboot.models.User
+import multiversebootcamp.springboot.datasource.dao.UserDAO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -19,9 +17,9 @@ class AirportsApiApplication(
     private val userController: UserController
 ) {
     @Bean
-    fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?, dao: DAO): OpenAPI {
+    fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String?, userDao: UserDAO): OpenAPI {
 //        println(dao.retrieveUser("vibeN_Jeff"))
-        println(dao.retrieveUsers())
+        println(userDao.retrieveUsers())
         return OpenAPI()
             .info(Info()
                 .title("Airports")

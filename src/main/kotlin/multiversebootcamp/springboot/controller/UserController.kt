@@ -1,16 +1,14 @@
 package multiversebootcamp.springboot.controller
 
-import multiversebootcamp.springboot.datasource.dao.DAO
+import multiversebootcamp.springboot.datasource.dao.UserDAO
 import multiversebootcamp.springboot.models.User
-import multiversebootcamp.springboot.utils.passwordutil.PasswordUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/users")
-class UserController(private val service: DAO,
-private val passV: PasswordUtil) {
+class UserController(private val service: UserDAO) {
 
     @GetMapping
     fun allUserNames(): ResponseEntity<Any> = ResponseEntity.ok(service.retrieveUsers())

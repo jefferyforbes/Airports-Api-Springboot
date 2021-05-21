@@ -3,10 +3,8 @@ package multiversebootcamp.springboot.models
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.bson.types.ObjectId
-import org.springframework.validation.annotation.Validated
 import java.time.LocalDate
 import java.time.LocalDateTime
-import javax.validation.constraints.Pattern
 
 @Serializable
 data class Airport(
