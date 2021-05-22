@@ -1,5 +1,6 @@
 package multiversebootcamp.springboot.datasource.db
 
+import com.mongodb.client.result.UpdateResult
 import multiversebootcamp.springboot.datasource.dao.BankDAO
 import multiversebootcamp.springboot.datasource.dao.BankDAOImpl
 import multiversebootcamp.springboot.models.Bank
@@ -20,7 +21,7 @@ class MockBanksDAO : BankDAOImpl() {
         )
     )
 
-    override fun createAccount(bank: Bank) {
+    override fun createAccount(bank: Bank): String {
         TODO("Not yet implemented")
     }
 
@@ -28,11 +29,11 @@ class MockBanksDAO : BankDAOImpl() {
         TODO("Not yet implemented")
     }
 
-    override fun getBalance(accountNumber: Int): Int? {
+    override fun getBalance(accountNumber: Int): String? {
         TODO("Not yet implemented")
     }
 
-    override fun getStandingOrders(accountNumber: Int) {
+    override fun getStandingOrders(accountNumber: Int): String {
         TODO("Not yet implemented")
     }
 

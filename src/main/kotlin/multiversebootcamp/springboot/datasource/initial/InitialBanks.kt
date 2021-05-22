@@ -29,7 +29,7 @@ class InitialBanks() {
                     accountNumber = 123456789,
                     passcode = 987654321,
                     balance = 1000000,
-                    standingOrder = null,
+                    standingOrder = mutableListOf(""),
                 )
             )
         } else {

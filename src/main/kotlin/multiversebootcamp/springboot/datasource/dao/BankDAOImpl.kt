@@ -1,6 +1,8 @@
 package multiversebootcamp.springboot.datasource.dao
 
+import com.mongodb.client.result.UpdateResult
 import multiversebootcamp.springboot.models.Bank
+import org.apache.catalina.connector.Response
 import org.litote.kmongo.*
 import org.springframework.context.annotation.Primary
 import org.springframework.http.ResponseEntity
@@ -16,12 +18,13 @@ class BankDAOImpl : BankDAO {
     private val database = client.getDatabase("Airports")
     private val banksCol = database.getCollection<Bank>()
 
-    override fun createAccount(bank: Bank) {
+    override fun createAccount(bank: Bank): String {
         val bankQ = banksCol.findOne(Bank::accountNumber eq bank.accountNumber)
-        if (bankQ == null) {
+        return if (bankQ == null) {
             banksCol.insertOne(bank)
+            "Bank account ${bank.accountNumber} created"
         } else {
-            ("Error, this account already exists in Database")
+            "Account number ${bank.accountNumber} already exists in Database."
         }
     }
 
@@ -30,26 +33,23 @@ class BankDAOImpl : BankDAO {
         return bankQ
     }
 
-    override fun getBalance(accountNumber: Int): Int? {
+    override fun getBalance(accountNumber: Int): String? {
         val bankQ = banksCol.findOne(Bank::accountNumber eq accountNumber)
-        return bankQ?.balance
+        return "Balance: ${bankQ?.balance}"
     }
 
-    override fun getStandingOrders(accountNumber: Int) {
+    override fun getStandingOrders(accountNumber: Int): String {
         val bankQ = banksCol.findOne(Bank::accountNumber eq accountNumber)
         val ordersQ = bankQ?.standingOrder?.toList()
-        if (ordersQ != null) {
-            ResponseEntity.ok(ordersQ)
-        } else {
-            ResponseEntity.badRequest().body(
-                "Error! Either the bank was not found, or there is no standing orders"
-            )
-        }
+        return ordersQ?.toString() ?: "Account number ${bankQ?.accountNumber} has no standing orders"
     }
 
     override fun createStandingOrder(accountNumber: Int, order: String) {
-        banksCol.updateOne(Bank::accountNumber eq accountNumber,
-            Bank::standingOrder addToSet order)
+        val bankQ = banksCol.findOne(Bank::accountNumber eq accountNumber)
+        val bankUpdate = bankQ?._id?.let { banksCol.updateOneById(it, order) }
+        banksCol.updateOne(
+            Bank::accountNumber eq bankQ?.accountNumber, setValue(Bank::accountNumber, order)
+        )
     }
 
     override fun sendMoney(senderAccount: Bank, receiptent: Bank, amount: Int) {
