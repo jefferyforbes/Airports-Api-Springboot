@@ -13,7 +13,7 @@ import kotlin.IllegalArgumentException
 class BanksController(private val service: BankDAO) {
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleNotFound(e:NoSuchElementException): ResponseEntity<String> =
+    fun handleNotFound(e: NoSuchElementException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
     @ExceptionHandler(IllegalArgumentException::class)
@@ -31,7 +31,7 @@ class BanksController(private val service: BankDAO) {
     fun login(): String = "Account logged into."
 
     @GetMapping("/{accountNumber}")
-    fun getBank(@PathVariable accountNumber : Int) = service.getAccount(accountNumber)
+    fun getBank(@PathVariable accountNumber: Int) = service.getAccount(accountNumber)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,12 +43,13 @@ class BanksController(private val service: BankDAO) {
     @GetMapping("/{accountNumber}/standing-orders")
     fun getStandingOrders(@PathVariable accountNumber: Int) = service.getStandingOrders(accountNumber)
 
-    @PutMapping("/{accountNumber}/standing-orders")
+    @PostMapping("/{accountNumber}/standing-orders")
     @ResponseStatus(HttpStatus.CREATED)
     fun createStandingOrder(@PathVariable accountNumber: Int, @RequestBody order: String) =
         service.createStandingOrder(accountNumber, order)
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun sendMoney(@RequestBody sender: Bank, receiver: Bank, amount: Int) = service.sendMoney(sender, receiver, amount)
+    fun sendMoney(@RequestBody sender: Int, receiver: Int, amount: Int) =
+        service.sendMoney(sender, receiver, amount)
 }

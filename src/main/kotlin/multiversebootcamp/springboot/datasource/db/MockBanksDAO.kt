@@ -33,7 +33,7 @@ class MockBanksDAO : BankDAOImpl() {
         TODO("Not yet implemented")
     }
 
-    override fun getStandingOrders(accountNumber: Int): String {
+    override fun getStandingOrders(accountNumber: Int): MutableCollection<String?>? {
         TODO("Not yet implemented")
     }
 
@@ -41,7 +41,7 @@ class MockBanksDAO : BankDAOImpl() {
         TODO("Not yet implemented")
     }
 
-    override fun sendMoney(senderAccount: Bank, receiptent: Bank, amount: Int) {
+    override fun sendMoney(senderAccount: Int, receiptent: Int, amount: Int) {
         TODO("Not yet implemented")
     }
 

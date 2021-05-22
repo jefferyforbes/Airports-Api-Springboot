@@ -38,24 +38,28 @@ class BankDAOImpl : BankDAO {
         return "Balance: ${bankQ?.balance}"
     }
 
-    override fun getStandingOrders(accountNumber: Int): String {
+    override fun getStandingOrders(accountNumber: Int): MutableCollection<String?>? {
         val bankQ = banksCol.findOne(Bank::accountNumber eq accountNumber)
-        val ordersQ = bankQ?.standingOrder?.toList()
-        return ordersQ?.toString() ?: "Account number ${bankQ?.accountNumber} has no standing orders"
+        val ordersQ = bankQ?.standingOrder
+        return ordersQ
     }
 
     override fun createStandingOrder(accountNumber: Int, order: String) {
         val bankQ = banksCol.findOne(Bank::accountNumber eq accountNumber)
-        val bankUpdate = bankQ?._id?.let { banksCol.updateOneById(it, order) }
-        banksCol.updateOne(
-            Bank::accountNumber eq bankQ?.accountNumber, setValue(Bank::accountNumber, order)
-        )
+        if (bankQ != null) {
+            val bankUpdate = bankQ?._id?.let { banksCol.updateOneById(it, order) }
+            banksCol.updateOne(
+                Bank::accountNumber eq bankQ?.accountNumber, setValue(Bank::accountNumber, order)
+            )
+        } else {
+            "Account number $accountNumber does not exist."
+        }
     }
 
-    override fun sendMoney(senderAccount: Bank, receiptent: Bank, amount: Int) {
-        val sender = banksCol.findOne(Bank::accountNumber eq senderAccount.accountNumber)
-        val receiver = banksCol.findOne(Bank::accountNumber eq receiptent.accountNumber)
-        if (senderAccount.balance < amount) {
+    override fun sendMoney(senderAccount: Int, receiptent: Int, amount: Int) {
+        val sender = banksCol.findOne(Bank::accountNumber eq senderAccount)
+        val receiver = banksCol.findOne(Bank::accountNumber eq receiptent)
+        if (sender?.balance!! < amount) {
             "Sorry, you do not have enough to cover this transfer."
         } else {
             sender?.balance!!.minus(amount)
